@@ -10,6 +10,8 @@ const port = process.env.PORT || 4000
 app.use(express.json())
 
 const {contactRouter} = require("./api/route/contactRoute")
+const {userRouter} = require("./api/route/userRoute")
+
 
 
 mongoose.connect(
@@ -20,6 +22,8 @@ app.get('/',(req, res)=>{
     res.send("Hello")
 })
 app.use("/api/v1/contact", contactRouter)
+app.use("/api/v1/user", userRouter)
+
 
 
 app.listen(port,()=>{

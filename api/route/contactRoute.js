@@ -1,12 +1,14 @@
 const {Router} = require("express")
 const contactRouter = Router()
 
+const {auth} = require("../../middleware/auth")
+
 const {getContact, createContact, deleteContact, updateConact} = require("../controller/contactController")
 
-contactRouter.route("/").get(getContact)
-contactRouter.route("/").post(createContact)
-contactRouter.route("/").delete(deleteContact)
-contactRouter.route("/").put(updateConact)
+contactRouter.route("/").get(auth, getContact)
+contactRouter.route("/").post(auth, createContact)
+contactRouter.route("/").delete(auth, deleteContact)
+contactRouter.route("/").put(auth, updateConact)
 
 
 

@@ -1,6 +1,5 @@
 const mongoose = require("mongoose")
 const contact = require("../../models/contact")
-const Contact = require("../../models/contact")
 
 
 // Read operation
