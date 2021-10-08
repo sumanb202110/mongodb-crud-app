@@ -7,7 +7,7 @@ const {getContact, createContact, deleteContact, updateConact} = require("../con
 
 contactRouter.route("/").get(auth, getContact)
 contactRouter.route("/").post(auth, createContact)
-contactRouter.route("/").delete(auth, deleteContact)
+contactRouter.route("/:name").delete(auth, deleteContact)
 contactRouter.route("/").put(auth, updateConact)
 
 

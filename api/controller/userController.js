@@ -10,13 +10,12 @@ const jwtexpirySecond = 3600
 const login = (req, res, next) => {
     User.find({username: req.body.username}).exec()
     .then(result=>{
-        console.log("result password", result[0].password)
         if(result){
             bcrypt.compare(req.body.password, result[0].password).then(
                 (valid)=>{
 
                     if(!valid){
-                        res.status(400).json({msg: "Incorrect password"})
+                        res.status(401).json({msg: "Incorrect password"})
                     }
                     
                     // Generate jwt token
@@ -37,6 +36,9 @@ const login = (req, res, next) => {
     })
     .catch(err=>{
         console.log(err)
+        res.status(400).json({
+            msg: "Error"
+        })
     })
 }
 
@@ -63,11 +65,15 @@ const createUser = (req, res, next) => {
             user.save()
             .then(result=>{
                 console.log(result)
-                res.status(201).json({...result})
+                res.status(201).json({
+                    msg: "User created successfully"
+                })
             })
             .catch(err=>{
                 console.log(err)
-                res.status(400).json(...err)
+                res.status(400).json({
+                    msg: "Error"
+                })
             })
         }
     )

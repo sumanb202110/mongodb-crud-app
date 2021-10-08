@@ -7,10 +7,18 @@ const Contact = require("../../models/contact")
 const getContact = (req, res, next) => {
     Contact.find().exec()
     .then(result=>{
-        res.status(200).json({...result})
+        res.status(200).json([...result.map((data)=>{
+            return {
+                name: data.name,
+                mobile_no: data.mobile_no
+            }
+        })])
     })
     .catch(err=>{
         console.log(err)
+        res.status(400).json({
+            msg: "Error"
+        })
     })
 }
 
@@ -25,7 +33,9 @@ const createContact = (req, res, next) => {
         contact.save()
         .then(result=>{
             console.log(result)
-            res.status(201).json({...result})
+            res.status(201).json({
+                msg: "Successfully created"
+            })
         })
         .catch(err=>{
             console.log(err)
@@ -44,21 +54,29 @@ const createContact = (req, res, next) => {
 const updateConact = (req, res, next) => {
     Contact.updateOne({name: req.body.name},{mobile_no: req.body.mobile_no}).exec()
     .then(result=>{
-        res.status(200).json({...result})
+        res.status(200).json({
+            msg: "Successfull updated"
+        })
     })
     .catch(err=>{
         console.log(err)
+        res.status(400).json({
+            msg: "Error"
+        })
     })
 }
 
 // Detete operation
 const deleteContact = (req, res, next) => {
-    Contact.deleteOne({name: req.body.name}).exec()
+    Contact.deleteOne({name: req.params.name}).exec()
     .then(result=>{
-        res.status(200).json({...result})
+        res.status(204)
     })
     .catch(err=>{
         console.log(err)
+        res.status(400).json({
+            msg: "Error"
+        })
     })
 }
 

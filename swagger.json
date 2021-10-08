@@ -28,7 +28,8 @@
             "contact"
           ],
           "description": "Get contacts",
-          "response": {
+          "summary": "Get all contacts",
+          "responses": {
             "200": {
               "description": "Success",
               "content": {
@@ -41,6 +42,9 @@
                   }
                 }
               }
+            },
+            "400": {
+              "description": "Error"
             }
           }
         },
@@ -62,11 +66,15 @@
             "200": {
               "description": "Succssfully created",
               "content": {
-                "applicationjson": {
+                "application/json": {
                   "schema": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/conatct"
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "description": "message",
+                        "example": "Succssfully created"
+                      }
                     }
                   }
                 }
@@ -94,39 +102,13 @@
               "content": {
                 "applicationjson": {
                   "schema": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/conatct"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "delete": {
-          "tags": [
-            "contact"
-          ],
-          "description": "delete",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/conatct"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Succssfully deleted",
-              "content": {
-                "applicationjson": {
-                  "schema": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/conatct"
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "description": "message",
+                        "example": "Succssfully updated"
+                      }
                     }
                   }
                 }
@@ -135,8 +117,34 @@
           }
         }
       },
+      "/api/v1/contact/{name}": {
+        "description": "Delete contact",
+        "delete": {
+          "tags": [
+            "contact"
+          ],
+          "description": "delete",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "name",
+              "schema": {
+                "type": "string",
+                "example": "aaa"
+              },
+              "required": true,
+              "description": "Name of the contact to be deleted"
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Succssfully deleted"
+            }
+          }
+        }
+      },
       "/api/v1/user/login": {
-        "description": "user",
+        "description": "login",
         "post": {
           "tags": [
             "user"
@@ -151,15 +159,84 @@
               }
             }
           },
-          "response": {
+          "responses": {
             "200": {
               "description": "Success",
               "content": {
                 "application/json": {
                   "schema": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/user"
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "description": "message",
+                        "example": "Succssfully login"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/v1/user": {
+        "description": "Create user",
+        "post": {
+          "tags": [
+            "user"
+          ],
+          "description": "Create user",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "description": "message",
+                        "example": "Succssfully created"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/v1/user/logout": {
+        "description": "Logout",
+        "post": {
+          "tags": [
+            "user"
+          ],
+          "description": "Logout",
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "description": "message",
+                        "example": "Logout"
+                      }
                     }
                   }
                 }
@@ -187,7 +264,7 @@
         "user": {
           "type": "object",
           "properties": {
-            "name": {
+            "username": {
               "type": "string",
               "example": "suman"
             },
