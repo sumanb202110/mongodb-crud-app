@@ -1,0 +1,202 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "CRUD app",
+      "description": "Mongodb crud demo app",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:4000"
+      }
+    ],
+    "tags": [
+      {
+        "name": "contact",
+        "description": "Contact apis"
+      },
+      {
+        "name": "user",
+        "description": "User apis"
+      }
+    ],
+    "paths": {
+      "/api/v1/contact": {
+        "description": "Contact",
+        "get": {
+          "tags": [
+            "contact"
+          ],
+          "description": "Get contacts",
+          "response": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/conatct"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "contact"
+          ],
+          "description": "Create new",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/conatct"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Succssfully created",
+              "content": {
+                "applicationjson": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/conatct"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "contact"
+          ],
+          "description": "update",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/conatct"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Succssfully updated",
+              "content": {
+                "applicationjson": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/conatct"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "contact"
+          ],
+          "description": "delete",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/conatct"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Succssfully deleted",
+              "content": {
+                "applicationjson": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/conatct"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/v1/user/login": {
+        "description": "user",
+        "post": {
+          "tags": [
+            "user"
+          ],
+          "description": "login",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user"
+                }
+              }
+            }
+          },
+          "response": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "conatct": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "suman"
+            },
+            "mobile_no": {
+              "type": "integer",
+              "example": 9999999999
+            }
+          }
+        },
+        "user": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "suman"
+            },
+            "password": {
+              "type": "string",
+              "example": "demo password"
+            }
+          }
+        }
+      }
+    }
+  }

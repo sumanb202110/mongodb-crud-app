@@ -2,6 +2,7 @@ const mongoose = require("mongoose")
 const Contact = require("../../models/contact")
 
 
+
 // Read operation
 const getContact = (req, res, next) => {
     Contact.find().exec()
