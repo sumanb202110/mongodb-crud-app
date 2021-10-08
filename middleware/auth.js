@@ -11,13 +11,13 @@ const auth = (req, res, next) => {
         if(!username){
             res.status(401).json({
                 msg: "unauthorized access"
-            })
+            }).send()
         }
         next()
     }catch(e){
         res.status(401).json({
             msg: "unauthorized access"
-        })
+        }).send()
     }
 }
 

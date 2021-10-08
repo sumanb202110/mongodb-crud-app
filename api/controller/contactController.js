@@ -4,92 +4,99 @@ const Contact = require("../../models/contact")
 
 
 // Read operation
-const getContact = (req, res, next) => {
-    Contact.find().exec()
-    .then(result=>{
+const getContact = async (req, res, next) => {
+    try{
+        const result = await Contact.find()
+        console.log(result)
         res.status(200).json([...result.map((data)=>{
-            return {
-                name: data.name,
-                mobile_no: data.mobile_no
-            }
-        })])
-    })
-    .catch(err=>{
+                    return {
+                        name: data.name,
+                        mobile_no: data.mobile_no
+                    }
+                })]).send()
+    }catch(err){
         console.log(err)
         res.status(400).json({
             msg: "Error"
-        })
-    })
+        }).send()
+    }
 }
 
 // Create operation
-const createContact = (req, res, next) => {
+const createContact = async (req, res, next) => {
+    try{
         const contact = new Contact({
             _id: new mongoose.Types.ObjectId(),
             name: req.body.name,
             mobile_no: req.body.mobile_no
         })
+        const result = await contact.save()
     
-        contact.save()
-        .then(result=>{
-            console.log(result)
+        console.log(result)
             res.status(201).json({
                 msg: "Successfully created"
-            })
-        })
-        .catch(err=>{
-            console.log(err)
-            if(err.code === 11000){
-                res.status(400).json({
-                    msg: "Duplicate entry"
-                })
-            }
+            }).send()
+
+    }catch(err){
+        console.log(err)
+        if(err.code === 11000){
             res.status(400).json({
-                msg: "Error"
-            })
-        })
+                msg: "Duplicate entry"
+            }).send()
+        }
+        res.status(400).json({
+            msg: "Error"
+        }).send()
+    }
 }
 
 // update operation
-const updateConact = (req, res, next) => {
-    Contact.updateOne({name: req.body.name},{mobile_no: req.body.mobile_no}).exec()
-    .then(result=>{
+const updateContact = async (req, res, next) => {
+    try{
+        const result = await Contact.updateOne({name: req.body.name},{mobile_no: req.body.mobile_no})
+
         console.log(result)
         if(result.modifiedCount === 1){
             res.status(200).json({
                 msg: "Successfull updated"
-            })
+            }).send()
         }else{
             res.status(404).json({
                 msg: "No matched contact found"
-            })
+            }).send()
         }  
-    })
-    .catch(err=>{
+
+    }catch(err){
         console.log(err)
         res.status(400).json({
             msg: "Error"
-        })
-    })
+        }).send()
+    }
 }
 
 // Detete operation
-const deleteContact = (req, res, next) => {
-    Contact.deleteOne({name: req.params.name}).exec()
-    .then(result=>{
-        res.status(204)
-    })
-    .catch(err=>{
-        console.log(err)
+const deleteContact = async (req, res, next) => {
+    try{
+        const result = await Contact.deleteOne({name: req.params.name})
+        if(result.deletedCount === 1){
+            res.status(204).send()
+        }else{
+            res.status(200).json({
+                msg: "Contact not found"
+            }).send()
+        }
+    }catch(err){
+        console.log("err",err)
         res.status(400).json({
             msg: "Error"
-        })
-    })
+        }).send()
+    }
+    
 }
 
 module.exports = {
     getContact,
     createContact,
     deleteContact,
-    updateConact
+    updateContact
 }

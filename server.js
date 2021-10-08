@@ -25,8 +25,8 @@ mongoose.connect(
 app.get('/',(req, res)=>{
     res.send("Hi, welcome to CRUD operation demo app!!!!!")
 })
-app.use("/api/v1/contact", contactRouter)
-app.use("/api/v1/user", userRouter)
+app.use("/api/v1/contacts", contactRouter)
+app.use("/api/v1/users", userRouter)
 
 
 
