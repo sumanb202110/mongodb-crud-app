@@ -19,7 +19,7 @@ mongoose.connect(
 )
 
 app.get('/',(req, res)=>{
-    res.send("Hello")
+    res.send("Hi, welcome to CRUD operation demo app!!!!!")
 })
 app.use("/api/v1/contact", contactRouter)
 app.use("/api/v1/user", userRouter)
