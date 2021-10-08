@@ -54,9 +54,16 @@ const createContact = (req, res, next) => {
 const updateConact = (req, res, next) => {
     Contact.updateOne({name: req.body.name},{mobile_no: req.body.mobile_no}).exec()
     .then(result=>{
-        res.status(200).json({
-            msg: "Successfull updated"
-        })
+        console.log(result)
+        if(result.modifiedCount === 1){
+            res.status(200).json({
+                msg: "Successfull updated"
+            })
+        }else{
+            res.status(404).json({
+                msg: "No matched contact found"
+            })
+        }  
     })
     .catch(err=>{
         console.log(err)
