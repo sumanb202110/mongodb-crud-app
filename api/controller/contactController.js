@@ -40,7 +40,7 @@ const createContact = async (req, res, next) => {
     }catch(err){
         console.log(err)
         if(err.code === 11000){
-            res.status(400).json({
+            return res.status(400).json({
                 msg: "Duplicate entry"
             }).send()
         }
@@ -57,11 +57,11 @@ const updateContact = async (req, res, next) => {
 
         console.log(result)
         if(result.modifiedCount === 1){
-            res.status(200).json({
+            return res.status(200).json({
                 msg: "Successfull updated"
             }).send()
         }else{
-            res.status(404).json({
+            return res.status(404).json({
                 msg: "No matched contact found"
             }).send()
         }  
@@ -79,7 +79,7 @@ const deleteContact = async (req, res, next) => {
     try{
         const result = await Contact.deleteOne({name: req.params.name})
         if(result.deletedCount === 1){
-            res.status(204).send()
+            return res.status(204).send()
         }else{
             res.status(200).json({
                 msg: "Contact not found"

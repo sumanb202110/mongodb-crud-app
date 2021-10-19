@@ -16,7 +16,7 @@ const login = async (req, res, next) => {
                 (valid)=>{
 
                     if(!valid){
-                        res.status(401).json({msg: "Incorrect password"}).send()
+                        return res.status(401).json({msg: "Incorrect password"}).send()
                     }
                     
                     // Generate jwt token
@@ -27,7 +27,7 @@ const login = async (req, res, next) => {
                     // Set token to cookie
                     res.cookie("token", token, {maxAge: jwtexpirySecond * 1000 })
                     
-                    res.status(200).json({
+                    return res.status(200).json({
                         username: result[0].username,
                         msg: "Successfully logedin"
                     }).send()
@@ -65,7 +65,7 @@ const createUser = async (req, res, next) => {
                 const result = await user.save()
 
                 if(result.username === user.username){
-                    res.status(200).json({
+                    return res.status(200).json({
                         msg: "New user created successfully."
                     }).send()
                 }
